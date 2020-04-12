@@ -1,0 +1,28 @@
+Package: ROIoptimzer
+Title: A ROI Optimizer Using the MOI Interface
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Dirk",
+           family = "Schumacher",
+           role = c("aut", "cre"),
+           email = "mail@dirk-schumacher.net")
+Description: Exactly what you think it does.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    ROI,
+    R6,
+    slam,
+    methods,
+    MOI
+RoxygenNote: 7.1.0
+Remotes:
+    r-opt/MOI
+Suggests: 
+    testthat (>= 2.1.0),
+    ROI.plugin.glpk
+Collate: 
+    'package.R'
+    'roi-optimizer-r6class.R'
+    'roi-optimizer-moi.R'
