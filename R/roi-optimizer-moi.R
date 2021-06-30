@@ -126,6 +126,14 @@ setMethod("moi_set", signature("ROI_optimizer", "MOI_objective_function", "MOI_s
 
 #' @export
 #' @rdname ROI_optimizer-class
+setMethod("moi_set", signature("ROI_optimizer", "MOI_objective_function", "MOI_scalar_affine_term", "missing"), function(model, type, index, value) {
+  index <- scalar_affine_function(list(index), 0)
+  model@ptr$set_linear_objective(index)
+  model
+})
+
+#' @export
+#' @rdname ROI_optimizer-class
 setMethod("moi_set", signature("ROI_optimizer", "MOI_objective_function", "numeric", "missing"), function(model, type, index, value) {
   model@ptr$set_linear_objective(
     MOI::scalar_affine_function(list(), index)

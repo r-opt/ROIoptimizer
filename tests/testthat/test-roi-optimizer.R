@@ -65,10 +65,20 @@ test_that("knapsack MIP integration test", {
 })
 
 test_that("Binary variables", {
+  expect_silent({
+    model <- ROI_optimizer("glpk")
+    x <- moi_add_constrained_variable(model, zero_one_set)
+    y <- moi_add_constrained_variable(model, integer_set)
+    z <- moi_add_constrained_variable(model, interval_set(10, 20))
+    z1 <- moi_add_constrained_variable(model, less_than_set(10))
+    moi_optimize(model)
+  })
+})
+
+test_that("Seting a single affine term as objective function", {
   model <- ROI_optimizer("glpk")
-  x <- moi_add_constrained_variable(model, zero_one_set)
-  y <- moi_add_constrained_variable(model, integer_set)
-  z <- moi_add_constrained_variable(model, interval_set(10, 20))
-  z1 <- moi_add_constrained_variable(model, less_than_set(10))
-  moi_optimize(model)
+  x <- moi_add_variable(model)
+  expect_silent(
+    moi_set(model, MOI::objective_function, scalar_affine_term(42, x))
+  )
 })

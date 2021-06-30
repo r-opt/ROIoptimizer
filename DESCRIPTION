@@ -16,7 +16,7 @@ Imports:
     slam,
     methods,
     MOI
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Remotes:
     r-opt/MOI
 Suggests: 

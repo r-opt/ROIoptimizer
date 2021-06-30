@@ -60,6 +60,7 @@ ROIOptimizerClassR6 <- R6::R6Class(
       row_idx
     },
     set_linear_objective = function(linear_expr) {
+      stopifnot(inherits(linear_expr, "MOI_scalar_affine_function"))
       for (var in linear_expr@terms) {
         private$linear_obj_vec[[var@variable@value]] <- var@coefficient
       }
