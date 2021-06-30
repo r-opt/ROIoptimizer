@@ -1,4 +1,4 @@
 library(testthat)
-library(ROIsolver)
+library(ROIoptimzer)
 
-test_check("ROIsolver")
+test_check("ROIoptimzer")

@@ -1,6 +1,6 @@
 Package: ROIoptimzer
 Title: A ROI Optimizer Using the MOI Interface
-Version: 0.0.0.9000
+Version: 0.0.1.9000
 Authors@R: 
     person(given = "Dirk",
            family = "Schumacher",
@@ -16,7 +16,7 @@ Imports:
     slam,
     methods,
     MOI
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Remotes:
     r-opt/MOI
 Suggests: 

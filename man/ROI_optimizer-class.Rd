@@ -17,6 +17,7 @@
 \alias{moi_add_constraint,ROI_optimizer,MOI_single_variable,MOI_integer_set-method}
 \alias{moi_set,ROI_optimizer,MOI_objective_function,MOI_scalar_quadratic_function,missing-method}
 \alias{moi_set,ROI_optimizer,MOI_objective_function,MOI_scalar_affine_function,missing-method}
+\alias{moi_set,ROI_optimizer,MOI_objective_function,MOI_scalar_affine_term,missing-method}
 \alias{moi_set,ROI_optimizer,MOI_objective_function,numeric,missing-method}
 \alias{moi_set,ROI_optimizer,MOI_objective_sense,MOI_optimization_sense,missing-method}
 \alias{moi_optimize,ROI_optimizer-method}
@@ -59,6 +60,8 @@
 \S4method{moi_set}{ROI_optimizer,MOI_objective_function,MOI_scalar_quadratic_function,missing}(model, type, index, value)
 
 \S4method{moi_set}{ROI_optimizer,MOI_objective_function,MOI_scalar_affine_function,missing}(model, type, index, value)
+
+\S4method{moi_set}{ROI_optimizer,MOI_objective_function,MOI_scalar_affine_term,missing}(model, type, index, value)
 
 \S4method{moi_set}{ROI_optimizer,MOI_objective_function,numeric,missing}(model, type, index, value)
 
