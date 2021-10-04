@@ -1,4 +1,4 @@
-Package: ROIoptimzer
+Package: ROIoptimizer
 Title: A ROI Optimizer Using the MOI Interface
 Version: 0.0.1.9000
 Authors@R: 
