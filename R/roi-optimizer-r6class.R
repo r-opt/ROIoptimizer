@@ -160,13 +160,13 @@ ROIOptimizerClassR6 <- R6::R6Class(
     },
     get_termination_status = function() {
       if (is.null(private$roi_result)) {
-        return(MOI::OPTIMIZE_NOT_CALLED)
+        return(MOI_OPTIMIZE_NOT_CALLED)
       }
       if (private$roi_result$status$code == 0L) {
-        return(MOI::SUCCESS)
+        return(MOI_SUCCESS)
       }
       if (private$roi_result$status$code == 1L) {
-        return(MOI::OTHER_ERROR)
+        return(MOI_OTHER_ERROR)
       }
       stop("Unknown ROI status code", call. = FALSE)
     },
