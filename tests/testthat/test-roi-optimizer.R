@@ -82,3 +82,32 @@ test_that("Seting a single affine term as objective function", {
     moi_set(model, MOI::objective_function, scalar_affine_term(42, x))
   )
 })
+
+test_that("quadratic objective functions work", {
+  model <- ROI_optimizer("glpk")
+  x <- moi_add_variable(model)
+  obj_fun <- moi_scalar_quadratic_function(
+    list(moi_scalar_quadratic_term(5, x, x)),
+    list(moi_scalar_affine_term(42, x)),
+    42
+  )
+  expect_silent(
+    moi_set(model, moi_objective_function, obj_fun)
+  )
+  expect_silent(
+    moi_add_constraint(model, obj_fun, moi_equal_to_set(5))
+  )
+  expect_equal(model@ptr$nconstraints(), 1)
+})
+
+test_that("scalar affine terms and constraints work", {
+  model <- ROI_optimizer("glpk")
+  x <- moi_add_variable(model)
+  expect_silent(
+    moi_add_constraint(
+      model,
+      moi_scalar_affine_term(42, x),
+      moi_greater_than_set(5)
+    )
+  )
+})

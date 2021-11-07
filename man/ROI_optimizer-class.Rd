@@ -9,6 +9,7 @@
 \alias{moi_add_constraint,ROI_optimizer,MOI_scalar_quadratic_function,MOI_less_than_set-method}
 \alias{moi_add_constraint,ROI_optimizer,MOI_scalar_quadratic_function,MOI_equal_to_set-method}
 \alias{moi_add_constraint,ROI_optimizer,MOI_scalar_affine_function,MOI_greater_than_set-method}
+\alias{moi_add_constraint,ROI_optimizer,MOI_scalar_affine_term,MOI_greater_than_set-method}
 \alias{moi_add_constraint,ROI_optimizer,MOI_scalar_quadratic_function,MOI_greater_than_set-method}
 \alias{moi_add_constraint,ROI_optimizer,MOI_single_variable,MOI_greater_than_set-method}
 \alias{moi_add_constraint,ROI_optimizer,MOI_single_variable,MOI_zero_one_set-method}
@@ -44,6 +45,8 @@
 \S4method{moi_add_constraint}{ROI_optimizer,MOI_scalar_quadratic_function,MOI_equal_to_set}(model, func, set)
 
 \S4method{moi_add_constraint}{ROI_optimizer,MOI_scalar_affine_function,MOI_greater_than_set}(model, func, set)
+
+\S4method{moi_add_constraint}{ROI_optimizer,MOI_scalar_affine_term,MOI_greater_than_set}(model, func, set)
 
 \S4method{moi_add_constraint}{ROI_optimizer,MOI_scalar_quadratic_function,MOI_greater_than_set}(model, func, set)
 
