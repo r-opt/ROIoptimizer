@@ -111,3 +111,10 @@ test_that("scalar affine terms and constraints work", {
     )
   )
 })
+
+test_that("termination status is correct", {
+  model <- ROI_optimizer("glpk")
+  x <- moi_add_variable(model)
+  res <- moi_get(model, moi_termination_status)
+  expect_equal(res, MOI_OPTIMIZE_NOT_CALLED)
+})
