@@ -7,8 +7,7 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![R build
-status](https://github.com/r-opt/ROIOptimizer/workflows/R-CMD-check/badge.svg)](https://github.com/r-opt/ROIOptimizer/actions)
+[![R-CMD-check](https://github.com/r-opt/ROIoptimizer/workflows/R-CMD-check/badge.svg)](https://github.com/r-opt/ROIoptimizer/actions)
 <!-- badges: end -->
 
 MOI bindings for ROI.

@@ -135,7 +135,7 @@ setMethod("moi_set", signature("ROI_optimizer", "MOI_objective_function", "MOI_s
 #' @export
 #' @rdname ROI_optimizer-class
 setMethod("moi_set", signature("ROI_optimizer", "MOI_objective_function", "MOI_scalar_affine_term", "missing"), function(model, type, index, value) {
-  index <- scalar_affine_function(list(index), 0)
+  index <- moi_scalar_affine_function(list(index), 0)
   model@ptr$set_linear_objective(index)
   model
 })
@@ -144,7 +144,7 @@ setMethod("moi_set", signature("ROI_optimizer", "MOI_objective_function", "MOI_s
 #' @rdname ROI_optimizer-class
 setMethod("moi_set", signature("ROI_optimizer", "MOI_objective_function", "numeric", "missing"), function(model, type, index, value) {
   model@ptr$set_linear_objective(
-    MOI::scalar_affine_function(list(), index)
+    moi_scalar_affine_function(list(), index)
   )
   model
 })
@@ -215,17 +215,17 @@ setMethod("moi_get", signature("ROI_optimizer", "MOI_objective_value", "missing"
 #' @export
 #' @rdname ROI_optimizer-class
 setMethod("moi_get", signature("ROI_optimizer", "MOI_primal_status", "missing"), function(model, type) {
-  if (all.equal(model@ptr$get_termination_status(), MOI::SUCCESS)) {
-    MOI::FEASIBLE_POINT
+  if (all.equal(model@ptr$get_termination_status(), MOI_SUCCESS)) {
+    MOI_FEASIBLE_POINT
   } else {
-    MOI::NO_SOLUTION
+    MOI_NO_SOLUTION
   }
 })
 
 #' @export
 #' @rdname ROI_optimizer-class
 setMethod("moi_get", signature("ROI_optimizer", "MOI_result_count", "missing"), function(model, type) {
-  if (all.equal(model@ptr$get_termination_status(), MOI::SUCCESS)) {
+  if (all.equal(model@ptr$get_termination_status(), MOI_SUCCESS)) {
     1L
   } else {
     0L

@@ -53,7 +53,7 @@ ROIOptimizerClassR6 <- R6::R6Class(
       nrow(private$A_mat)
     },
     add_quadratic_constraint = function(quadratic_expr, type, rhs) {
-      row_idx <- self$add_linear_constraint(MOI::scalar_affine_function(quadratic_expr@affine_terms, quadratic_expr@constant), type, rhs)
+      row_idx <- self$add_linear_constraint(moi_scalar_affine_function(quadratic_expr@affine_terms, quadratic_expr@constant), type, rhs)
       quad_vars <- quadratic_expr@quadratic_terms
       new_Q <- private$to_Q_mat(quad_vars)
       private$Q_constraints$set(as.character(row_idx), new_Q)
@@ -71,7 +71,7 @@ ROIOptimizerClassR6 <- R6::R6Class(
       private$obj_sense <- sense
     },
     set_quadratic_objective = function(quadratic_expr) {
-      self$set_linear_objective(MOI::scalar_affine_function(quadratic_expr@affine_terms, quadratic_expr@constant))
+      self$set_linear_objective(moi_scalar_affine_function(quadratic_expr@affine_terms, quadratic_expr@constant))
       quad_vars <- quadratic_expr@quadratic_terms
       private$obj_Q_mat <- private$to_Q_mat(quad_vars)
       private$objective_is_linear <- FALSE
@@ -160,13 +160,13 @@ ROIOptimizerClassR6 <- R6::R6Class(
     },
     get_termination_status = function() {
       if (is.null(private$roi_result)) {
-        return(MOI::OPTIMIZE_NOT_CALLED)
+        return(MOI_OPTIMIZE_NOT_CALLED)
       }
       if (private$roi_result$status$code == 0L) {
-        return(MOI::SUCCESS)
+        return(MOI_SUCCESS)
       }
       if (private$roi_result$status$code == 1L) {
-        return(MOI::OTHER_ERROR)
+        return(MOI_OTHER_ERROR)
       }
       stop("Unknown ROI status code", call. = FALSE)
     },
