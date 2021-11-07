@@ -72,6 +72,22 @@ setMethod("moi_add_constraint", signature("ROI_optimizer", "MOI_scalar_affine_te
 
 #' @export
 #' @rdname ROI_optimizer-class
+setMethod("moi_add_constraint", signature("ROI_optimizer", "MOI_scalar_affine_term", "MOI_less_than_set"), function(model, func, set) {
+  func <- moi_scalar_affine_function(list(func), 0)
+  constr_id <- model@ptr$add_linear_constraint(func, "<=", set@upper)
+  new("MOI_constraint_index", value = constr_id)
+})
+
+#' @export
+#' @rdname ROI_optimizer-class
+setMethod("moi_add_constraint", signature("ROI_optimizer", "MOI_scalar_affine_term", "MOI_equal_to_set"), function(model, func, set) {
+  func <- moi_scalar_affine_function(list(func), 0)
+  constr_id <- model@ptr$add_linear_constraint(func, "==", set@value)
+  new("MOI_constraint_index", value = constr_id)
+})
+
+#' @export
+#' @rdname ROI_optimizer-class
 setMethod("moi_add_constraint", signature("ROI_optimizer", "MOI_scalar_quadratic_function", "MOI_greater_than_set"), function(model, func, set) {
   func <- canonicalize(func)
   constr_id <- model@ptr$add_quadratic_constraint(func, ">=", set@lower - func@constant)

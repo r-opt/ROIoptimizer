@@ -110,6 +110,20 @@ test_that("scalar affine terms and constraints work", {
       moi_greater_than_set(5)
     )
   )
+  expect_silent(
+    moi_add_constraint(
+      model,
+      moi_scalar_affine_term(42, x),
+      moi_less_than_set(5)
+    )
+  )
+  expect_silent(
+    moi_add_constraint(
+      model,
+      moi_scalar_affine_term(42, x),
+      moi_equal_to_set(5)
+    )
+  )
 })
 
 test_that("termination status is correct", {
