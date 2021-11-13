@@ -21,7 +21,8 @@ Remotes:
     r-opt/MOI
 Suggests: 
     testthat (>= 2.1.0),
-    ROI.plugin.glpk
+    ROI.plugin.glpk,
+    covr
 Collate: 
     'package.R'
     'roi-optimizer-r6class.R'
