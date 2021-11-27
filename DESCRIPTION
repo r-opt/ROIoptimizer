@@ -27,3 +27,4 @@ Collate:
     'package.R'
     'roi-optimizer-r6class.R'
     'roi-optimizer-moi.R'
+    'to-roi.R'

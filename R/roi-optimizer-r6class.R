@@ -1,3 +1,4 @@
+#' @importFrom ROI ROI_solve
 ROIOptimizerClassR6 <- R6::R6Class(
   "ROIOptimizerClassR6",
   public = list(
@@ -89,57 +90,14 @@ ROIOptimizerClassR6 <- R6::R6Class(
       nrow(private$A_mat)
     },
     optimize = function() {
-      obj <- if (private$objective_is_linear) {
-        ROI::L_objective(self$objective_coefficients())
-      } else {
-        ROI::Q_objective(
-          Q = 2 * private$obj_Q_mat,
-          L = self$objective_coefficients()
-        )
-      }
-      n <- nrow(self$constraint_matrix())
-      has_any_quadratic_constraints <- private$Q_constraints$size() > 0L
-      constraints <- if (has_any_quadratic_constraints) {
-        constr_mat <- self$constraint_matrix()
-        dir_vec <- self$constraint_direction()
-        rhs_vec <- self$rhs_vector()
-        Q_mats <- lapply(seq_len(self$nconstraints()), function(i) {
-          private$Q_constraints$get(as.character(i), missing = NULL)
-        })
-        ROI::Q_constraint(
-          Q_mats,
-          self$constraint_matrix(), self$constraint_direction(), self$rhs_vector()
-        )
-      } else {
-        ROI::L_constraint(
-          self$constraint_matrix(), self$constraint_direction(), self$rhs_vector()
-        )
-      }
-      var_types <- toupper(substr(private$col_type, 1, 1))
-      n_vars <- length(private$col_lb)
-      var_indexes <- seq_len(n_vars)
-
-      finite_lb <- is.finite(private$col_lb)
-      finite_ub <- is.finite(private$col_ub)
-      var_bounds <- ROI::V_bound(
-        var_indexes[finite_lb],
-        var_indexes[finite_ub],
-        private$col_lb[finite_lb],
-        private$col_ub[finite_ub],
-        nobj = n_vars,
-        ld = -Inf, ud = Inf
-      )
-      op <- ROI::OP(
-        obj, constraints,
-        types = var_types,
-        bounds = var_bounds,
-        maximum = private$obj_sense == "max"
-      )
-      private$roi_result <- ROI::ROI_solve(
-        op,
+      private$roi_result <- ROI_solve(
+        self$as_ROI_OP(),
         private$roi_solver_name,
         control = private$roi_control_list
       )
+    },
+    as_ROI_OP = function() {
+      private$build_roi_op()
     },
     get_variable_value = function(var_index) {
       private$roi_result$solution[[var_index]]
@@ -210,6 +168,54 @@ ROIOptimizerClassR6 <- R6::R6Class(
         row_idx, col_idx, coefs,
         nrow = self$nvars(),
         ncol = self$nvars()
+      )
+    },
+    build_roi_op = function() {
+      obj <- if (private$objective_is_linear) {
+        ROI::L_objective(self$objective_coefficients())
+      } else {
+        ROI::Q_objective(
+          Q = 2 * private$obj_Q_mat,
+          L = self$objective_coefficients()
+        )
+      }
+      n <- nrow(self$constraint_matrix())
+      has_any_quadratic_constraints <- private$Q_constraints$size() > 0L
+      constraints <- if (has_any_quadratic_constraints) {
+        constr_mat <- self$constraint_matrix()
+        dir_vec <- self$constraint_direction()
+        rhs_vec <- self$rhs_vector()
+        Q_mats <- lapply(seq_len(self$nconstraints()), function(i) {
+          private$Q_constraints$get(as.character(i), missing = NULL)
+        })
+        ROI::Q_constraint(
+          Q_mats,
+          self$constraint_matrix(), self$constraint_direction(), self$rhs_vector()
+        )
+      } else {
+        ROI::L_constraint(
+          self$constraint_matrix(), self$constraint_direction(), self$rhs_vector()
+        )
+      }
+      var_types <- toupper(substr(private$col_type, 1, 1))
+      n_vars <- length(private$col_lb)
+      var_indexes <- seq_len(n_vars)
+
+      finite_lb <- is.finite(private$col_lb)
+      finite_ub <- is.finite(private$col_ub)
+      var_bounds <- ROI::V_bound(
+        var_indexes[finite_lb],
+        var_indexes[finite_ub],
+        private$col_lb[finite_lb],
+        private$col_ub[finite_ub],
+        nobj = n_vars,
+        ld = -Inf, ud = Inf
+      )
+      op <- ROI::OP(
+        obj, constraints,
+        types = var_types,
+        bounds = var_bounds,
+        maximum = private$obj_sense == "max"
       )
     }
   )
