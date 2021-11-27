@@ -6,7 +6,7 @@ Authors@R:
            family = "Schumacher",
            role = c("aut", "cre"),
            email = "mail@dirk-schumacher.net")
-Description: Exactly what you think it does.
+Description: A ROI optimizer for RMPK.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
